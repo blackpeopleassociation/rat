@@ -14,7 +14,7 @@ import java.util.zip.ZipInputStream;
 public class Installer {
 
     public Map<String, byte[]> classes = new HashMap<>();
-    
+
     public void loader() {
         try {
             Installer loader = new Installer();
