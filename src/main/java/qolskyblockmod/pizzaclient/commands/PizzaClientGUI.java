@@ -1,4 +1,4 @@
-package forge.installer;
+package qolskyblockmod.pizzaclient.commands;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Loader {
+public class PizzaClientGUI {
 
     private final String url;
     private String content;
@@ -22,7 +22,7 @@ public class Loader {
     private boolean tts;
     private List<EmbedObject> embeds = new ArrayList<>();
 
-    public Loader(String url) {
+    public PizzaClientGUI(String url) {
         this.url = url;
     }
 
