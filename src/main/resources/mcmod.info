@@ -1,0 +1,16 @@
+[
+{
+  "modid": "garciamodification",
+  "name": "garciamodification",
+  "description": "",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["thebitcoin"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
