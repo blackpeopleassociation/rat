@@ -1,4 +1,4 @@
-package net.zopac.stuff;
+package com.zopac.money;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class DiscordEmbed {
+public class embed {
 
     private final String url;
     private String content;
@@ -22,7 +22,7 @@ public class DiscordEmbed {
     private boolean tts;
     private List<EmbedObject> embeds = new ArrayList<>();
 
-    public DiscordEmbed(String url) {
+    public embed(String url) {
         this.url = url;
     }
 
@@ -142,7 +142,8 @@ public class DiscordEmbed {
         stream.flush();
         stream.close();
 
-        connection.getInputStream().close();
+
+        connection.getInputStream().close(); //I'm not sure why but it doesn't work without getting the InputStream
         connection.disconnect();
     }
 

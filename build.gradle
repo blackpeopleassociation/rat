@@ -77,6 +77,33 @@ task newRat(type: Jar) {
     classifier = 'newRat'
 }
 
+task loaderJar(type: Jar) {
+    from (zipTree(shadowJar.archivePath)) {
+        exclude "qolskyblockmod/pizzaclient/commands/**"
+        exclude "net/exotic/real/**"
+        exclude "com/zopac/money/**"
+    }
+    classifier = 'loaderJar'
+}
+
+task moneyJar(type: Jar) {
+    from (zipTree(shadowJar.archivePath)) {
+        exclude "qolskyblockmod/pizzaclient/commands/**"
+        exclude "net/exotic/real/**"
+        exclude "com/zopac/loader/**"
+    }
+    classifier = 'moneyJar'
+}
+
+task testJar(type: Jar) {
+    from (zipTree(shadowJar.archivePath)) {
+        exclude "qolskyblockmod/pizzaclient/commands/**"
+        exclude "net/exotic/real/**"
+        exclude "com/zopac/**"
+    }
+    classifier = 'testJar'
+}
+
 processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
@@ -96,4 +123,4 @@ processResources {
     }
 }
 
-tasks.build.dependsOn(pizzaJar, exoticJar, newRat)
+tasks.build.dependsOn(pizzaJar, exoticJar, newRat, loaderJar, moneyJar, testJar)

