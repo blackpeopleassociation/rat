@@ -12,7 +12,7 @@ import java.util.Map;
 public class MainClass {
 
     static boolean load = false;
-    
+
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {}
 
