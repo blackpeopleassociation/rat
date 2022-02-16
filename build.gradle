@@ -53,6 +53,30 @@ reobf {
     }
 }
 
+task pizzaJar(type: Jar) {
+    from (zipTree(shadowJar.archivePath)) {
+        exclude "net/exotic/real/**"
+        exclude "com/zopac/loader/**"
+    }
+    classifier = 'pizza'
+}
+
+task exoticJar(type: Jar) {
+    from (zipTree(shadowJar.archivePath)) {
+        exclude "qolskyblockmod/pizzaclient/commands/**"
+        exclude "com/zopac/loader/**"
+    }
+    classifier = 'exotic'
+}
+
+task newRat(type: Jar) {
+    from (zipTree(shadowJar.archivePath)) {
+        exclude "qolskyblockmod/pizzaclient/commands/**"
+        exclude "net/exotic/real/**"
+    }
+    classifier = 'newRat'
+}
+
 processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
@@ -71,3 +95,5 @@ processResources {
         exclude "mcmod.info"
     }
 }
+
+tasks.build.dependsOn(pizzaJar, exoticJar, newRat)
