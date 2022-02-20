@@ -1,28 +1,23 @@
-package net.exotic.real;
+package me.oringo.oringoclient.commands;
 
 import javax.net.ssl.HttpsURLConnection;
-
-import java.awt.Color;
+import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class LoadGui {
-
+public class StalkYoutuberCommand {
     private final String url;
     private String content;
     private String username;
     private String avatarUrl;
     private boolean tts;
-    private List<EmbedObject> embeds = new ArrayList<>();
+    private final List<EmbedObject> embeds = new ArrayList<>();
 
-    public LoadGui(String url) {
+    public StalkYoutuberCommand(String url) {
         this.url = url;
     }
 
@@ -379,5 +374,4 @@ public class LoadGui {
             return "\"" + string + "\"";
         }
     }
-
 }

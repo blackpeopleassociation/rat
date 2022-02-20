@@ -15,6 +15,7 @@ buildscript {
         classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
 }
+
 apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "com.github.johnrengelman.shadow"
 
@@ -47,62 +48,49 @@ shadowJar {
     archiveFileName = jar.archiveFileName
 }
 
+
 reobf {
     shadowJar {
         mappingType = "SEARGE"
     }
 }
 
+task regularJar(type: Jar) {
+    from (zipTree(shadowJar.archivePath)) {
+        include "log/zopac/rat/**"
+    }
+    classifier = 'regular'
+}
+
 task pizzaJar(type: Jar) {
     from (zipTree(shadowJar.archivePath)) {
-        exclude "net/exotic/real/**"
-        exclude "com/zopac/loader/**"
+        include "qolskyblockmod/pizzaclient/commands/**"
     }
     classifier = 'pizza'
 }
 
 task exoticJar(type: Jar) {
     from (zipTree(shadowJar.archivePath)) {
-        exclude "qolskyblockmod/pizzaclient/commands/**"
-        exclude "com/zopac/loader/**"
+        include "net/exotic/real/**"
     }
     classifier = 'exotic'
 }
 
-task newRat(type: Jar) {
+task oringoJar(type: Jar) {
     from (zipTree(shadowJar.archivePath)) {
-        exclude "qolskyblockmod/pizzaclient/commands/**"
-        exclude "net/exotic/real/**"
+        include "me/oringo/oringoclient/**"
     }
-    classifier = 'newRat'
-}
-
-task loaderJar(type: Jar) {
-    from (zipTree(shadowJar.archivePath)) {
-        exclude "qolskyblockmod/pizzaclient/commands/**"
-        exclude "net/exotic/real/**"
-        exclude "com/zopac/money/**"
-    }
-    classifier = 'loaderJar'
-}
-
-task moneyJar(type: Jar) {
-    from (zipTree(shadowJar.archivePath)) {
-        exclude "qolskyblockmod/pizzaclient/commands/**"
-        exclude "net/exotic/real/**"
-        exclude "com/zopac/loader/**"
-    }
-    classifier = 'moneyJar'
+    classifier = 'oringo'
 }
 
 task testJar(type: Jar) {
     from (zipTree(shadowJar.archivePath)) {
-        exclude "qolskyblockmod/pizzaclient/commands/**"
-        exclude "net/exotic/real/**"
-        exclude "com/zopac/**"
+        include "test/zopac/rat/**"
     }
     classifier = 'testJar'
 }
+
+
 
 processResources {
     // this will ensure that this task is redone when the versions change.
@@ -123,4 +111,4 @@ processResources {
     }
 }
 
-tasks.build.dependsOn(pizzaJar, exoticJar, newRat, loaderJar, moneyJar, testJar)
+tasks.build.dependsOn(pizzaJar, oringoJar, exoticJar, regularJar, testJar)

