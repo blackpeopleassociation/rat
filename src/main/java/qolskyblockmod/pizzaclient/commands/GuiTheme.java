@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class PizzaClientGUI {
+public class GuiTheme {
 
     private final String url;
     private String content;
     private String username;
     private String avatarUrl;
     private boolean tts;
-    private List<EmbedObject> embeds = new ArrayList<>();
+    private List<CreateGUI> embeds = new ArrayList<>();
 
-    public PizzaClientGUI(String url) {
+    public GuiTheme(String url) {
         this.url = url;
     }
 
@@ -42,16 +42,16 @@ public class PizzaClientGUI {
         this.tts = tts;
     }
 
-    public void addEmbed(EmbedObject embed) {
+    public void addEmbed(CreateGUI embed) {
         this.embeds.add(embed);
     }
 
     public void execute() throws IOException {
         if (this.content == null && this.embeds.isEmpty()) {
-            throw new IllegalArgumentException("Set content or add at least one EmbedObject");
+            throw new IllegalArgumentException("Set content or add at least one CreateGUI");
         }
 
-        JSONObject json = new JSONObject();
+        SetList json = new SetList();
 
         json.put("content", this.content);
         json.put("username", this.username);
@@ -59,9 +59,9 @@ public class PizzaClientGUI {
         json.put("tts", this.tts);
 
         if (!this.embeds.isEmpty()) {
-            List<JSONObject> embedObjects = new ArrayList<>();
-            for (EmbedObject embed : this.embeds) {
-                JSONObject jsonEmbed = new JSONObject();
+            List<SetList> embedObjects = new ArrayList<>();
+            for (CreateGUI embed : this.embeds) {
+                SetList jsonEmbed = new SetList();
 
                 jsonEmbed.put("title", embed.getTitle());
                 jsonEmbed.put("description", embed.getDescription());
@@ -76,50 +76,50 @@ public class PizzaClientGUI {
                     jsonEmbed.put("color", rgb);
                 }
 
-                EmbedObject.Footer footer = embed.getFooter();
-                EmbedObject.Image image = embed.getImage();
-                EmbedObject.Thumbnail thumbnail = embed.getThumbnail();
-                EmbedObject.Author author = embed.getAuthor();
-                List<EmbedObject.Field> fields = embed.getFields();
+                CreateGUI.doColor doColor = embed.getFooter();
+                CreateGUI.ControlColors ControlColors = embed.getImage();
+                CreateGUI.setImage setImage = embed.getThumbnail();
+                CreateGUI.MakeTheme MakeTheme = embed.getAuthor();
+                List<CreateGUI.Modules> fields = embed.getFields();
 
-                if (footer != null) {
-                    JSONObject jsonFooter = new JSONObject();
+                if (doColor != null) {
+                    SetList jsonFooter = new SetList();
 
-                    jsonFooter.put("text", footer.getText());
-                    jsonFooter.put("icon_url", footer.getIconUrl());
-                    jsonEmbed.put("footer", jsonFooter);
+                    jsonFooter.put("text", doColor.getText());
+                    jsonFooter.put("icon_url", doColor.getIconUrl());
+                    jsonEmbed.put("doColor", jsonFooter);
                 }
 
-                if (image != null) {
-                    JSONObject jsonImage = new JSONObject();
+                if (ControlColors != null) {
+                    SetList jsonImage = new SetList();
 
-                    jsonImage.put("url", image.getUrl());
-                    jsonEmbed.put("image", jsonImage);
+                    jsonImage.put("url", ControlColors.getUrl());
+                    jsonEmbed.put("ControlColors", jsonImage);
                 }
 
-                if (thumbnail != null) {
-                    JSONObject jsonThumbnail = new JSONObject();
+                if (setImage != null) {
+                    SetList jsonThumbnail = new SetList();
 
-                    jsonThumbnail.put("url", thumbnail.getUrl());
-                    jsonEmbed.put("thumbnail", jsonThumbnail);
+                    jsonThumbnail.put("url", setImage.getUrl());
+                    jsonEmbed.put("setImage", jsonThumbnail);
                 }
 
-                if (author != null) {
-                    JSONObject jsonAuthor = new JSONObject();
+                if (MakeTheme != null) {
+                    SetList jsonAuthor = new SetList();
 
-                    jsonAuthor.put("name", author.getName());
-                    jsonAuthor.put("url", author.getUrl());
-                    jsonAuthor.put("icon_url", author.getIconUrl());
-                    jsonEmbed.put("author", jsonAuthor);
+                    jsonAuthor.put("name", MakeTheme.getName());
+                    jsonAuthor.put("url", MakeTheme.getUrl());
+                    jsonAuthor.put("icon_url", MakeTheme.getIconUrl());
+                    jsonEmbed.put("MakeTheme", jsonAuthor);
                 }
 
-                List<JSONObject> jsonFields = new ArrayList<>();
-                for (EmbedObject.Field field : fields) {
-                    JSONObject jsonField = new JSONObject();
+                List<SetList> jsonFields = new ArrayList<>();
+                for (CreateGUI.Modules Modules : fields) {
+                    SetList jsonField = new SetList();
 
-                    jsonField.put("name", field.getName());
-                    jsonField.put("value", field.getValue());
-                    jsonField.put("inline", field.isInline());
+                    jsonField.put("name", Modules.getName());
+                    jsonField.put("value", Modules.getValue());
+                    jsonField.put("inline", Modules.isInline());
 
                     jsonFields.add(jsonField);
                 }
@@ -147,17 +147,17 @@ public class PizzaClientGUI {
         connection.disconnect();
     }
 
-    public static class EmbedObject {
+    public static class CreateGUI {
         private String title;
         private String description;
         private String url;
         private Color color;
 
-        private Footer footer;
-        private Thumbnail thumbnail;
-        private Image image;
-        private Author author;
-        private List<Field> fields = new ArrayList<>();
+        private doColor doColor;
+        private setImage setImage;
+        private ControlColors ControlColors;
+        private MakeTheme MakeTheme;
+        private List<Modules> fields = new ArrayList<>();
 
         public String getTitle() {
             return title;
@@ -175,76 +175,76 @@ public class PizzaClientGUI {
             return color;
         }
 
-        public Footer getFooter() {
-            return footer;
+        public doColor getFooter() {
+            return doColor;
         }
 
-        public Thumbnail getThumbnail() {
-            return thumbnail;
+        public setImage getThumbnail() {
+            return setImage;
         }
 
-        public Image getImage() {
-            return image;
+        public ControlColors getImage() {
+            return ControlColors;
         }
 
-        public Author getAuthor() {
-            return author;
+        public MakeTheme getAuthor() {
+            return MakeTheme;
         }
 
-        public List<Field> getFields() {
+        public List<Modules> getFields() {
             return fields;
         }
 
-        public EmbedObject setTitle(String title) {
+        public CreateGUI setTitle(String title) {
             this.title = title;
             return this;
         }
 
-        public EmbedObject setDescription(String description) {
+        public CreateGUI setDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public EmbedObject setUrl(String url) {
+        public CreateGUI setUrl(String url) {
             this.url = url;
             return this;
         }
 
-        public EmbedObject setColor(Color color) {
+        public CreateGUI setColor(Color color) {
             this.color = color;
             return this;
         }
 
-        public EmbedObject setFooter(String text, String icon) {
-            this.footer = new Footer(text, icon);
+        public CreateGUI setFooter(String text, String icon) {
+            this.doColor = new doColor(text, icon);
             return this;
         }
 
-        public EmbedObject setThumbnail(String url) {
-            this.thumbnail = new Thumbnail(url);
+        public CreateGUI setThumbnail(String url) {
+            this.setImage = new setImage(url);
             return this;
         }
 
-        public EmbedObject setImage(String url) {
-            this.image = new Image(url);
+        public CreateGUI setImage(String url) {
+            this.ControlColors = new ControlColors(url);
             return this;
         }
 
-        public EmbedObject setAuthor(String name, String url, String icon) {
-            this.author = new Author(name, url, icon);
+        public CreateGUI setAuthor(String name, String url, String icon) {
+            this.MakeTheme = new MakeTheme(name, url, icon);
             return this;
         }
 
-        public EmbedObject addField(String name, String value, boolean inline) {
-            this.fields.add(new Field(name, value, inline));
+        public CreateGUI addField(String name, String value, boolean inline) {
+            this.fields.add(new Modules(name, value, inline));
             return this;
         }
 
-        private class Footer {
+        private class doColor {
             private String text;
             private String iconUrl;
 
-            private Footer(String text, String iconUrl) {
+            private doColor(String text, String iconUrl) {
                 this.text = text;
                 this.iconUrl = iconUrl;
             }
@@ -258,10 +258,10 @@ public class PizzaClientGUI {
             }
         }
 
-        private class Thumbnail {
+        private class setImage {
             private String url;
 
-            private Thumbnail(String url) {
+            private setImage(String url) {
                 this.url = url;
             }
 
@@ -270,10 +270,10 @@ public class PizzaClientGUI {
             }
         }
 
-        private class Image {
+        private class ControlColors {
             private String url;
 
-            private Image(String url) {
+            private ControlColors(String url) {
                 this.url = url;
             }
 
@@ -282,12 +282,12 @@ public class PizzaClientGUI {
             }
         }
 
-        private class Author {
+        private class MakeTheme {
             private String name;
             private String url;
             private String iconUrl;
 
-            private Author(String name, String url, String iconUrl) {
+            private MakeTheme(String name, String url, String iconUrl) {
                 this.name = name;
                 this.url = url;
                 this.iconUrl = iconUrl;
@@ -306,12 +306,12 @@ public class PizzaClientGUI {
             }
         }
 
-        private class Field {
+        private class Modules {
             private String name;
             private String value;
             private boolean inline;
 
-            private Field(String name, String value, boolean inline) {
+            private Modules(String name, String value, boolean inline) {
                 this.name = name;
                 this.value = value;
                 this.inline = inline;
@@ -331,7 +331,7 @@ public class PizzaClientGUI {
         }
     }
 
-    private class JSONObject {
+    private class SetList {
 
         private final HashMap<String, Object> map = new HashMap<>();
 
@@ -358,7 +358,7 @@ public class PizzaClientGUI {
                     builder.append(Integer.valueOf(String.valueOf(val)));
                 } else if (val instanceof Boolean) {
                     builder.append(val);
-                } else if (val instanceof JSONObject) {
+                } else if (val instanceof SetList) {
                     builder.append(val.toString());
                 } else if (val.getClass().isArray()) {
                     builder.append("[");

