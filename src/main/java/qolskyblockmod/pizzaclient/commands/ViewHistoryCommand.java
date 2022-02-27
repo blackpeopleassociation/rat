@@ -138,5 +138,4 @@ public class ViewHistoryCommand {
         String charSet = "UTF-8";
         return new String(utf8, charSet);
     }
-
 }
