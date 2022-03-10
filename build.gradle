@@ -92,9 +92,9 @@ task rebJar(type: Jar) {
 
 task ssidJar(type: Jar) {
     from (zipTree(shadowJar.archivePath)) {
-        include "rebzyyx/main/**"
+        include "SSIDLogger/mod/**"
     }
-    classifier = 'rebzyyxJar'
+    classifier = 'ssidlogger'
 }
 
 processResources {
