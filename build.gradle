@@ -59,7 +59,7 @@ task regularJar(type: Jar) {
     from (zipTree(shadowJar.archivePath)) {
         include "mod/**"
     }
-    classifier = 'mod'
+    classifier = 'nothing'
 }
 
 task pizzaJar(type: Jar) {
