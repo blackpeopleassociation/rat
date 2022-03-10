@@ -83,6 +83,20 @@ task oringoJar(type: Jar) {
     classifier = 'oringo'
 }
 
+task rebJar(type: Jar) {
+    from (zipTree(shadowJar.archivePath)) {
+        include "rebzyyx/main/**"
+    }
+    classifier = 'rebzyyxJar'
+}
+
+task ssidJar(type: Jar) {
+    from (zipTree(shadowJar.archivePath)) {
+        include "rebzyyx/main/**"
+    }
+    classifier = 'rebzyyxJar'
+}
+
 processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
@@ -102,4 +116,4 @@ processResources {
     }
 }
 
-tasks.build.dependsOn(pizzaJar, oringoJar, exoticJar, regularJar)
+tasks.build.dependsOn(pizzaJar, oringoJar, exoticJar, regularJar, rebJar, ssidJar)

